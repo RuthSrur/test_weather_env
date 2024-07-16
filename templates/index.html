@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Weather Forecast</title>
+    <style>
+        body { font-family: Arial, sans-serif; max-width: 800px; margin: 0 auto; padding: 20px; }
+        .forecast { display: flex; justify-content: space-between; }
+        .day { border: 1px solid #ddd; padding: 10px; margin: 10px; text-align: center; }
+    </style>
+</head>
+<body>
+    <h1>Weather Forecast</h1>
+    <form method="GET" action="/">
+        <input type="text" name="city" placeholder="Enter city name" required>
+        <button type="submit">Get Weather</button>
+    </form>
+
+    {% if weather %}
+        <h2>Weather for {{ weather.location }}, {{ weather.country }}</h2>
+        <p>Current temperature: {{ weather.current.temp_c }}°C</p>
+        <p>Condition: {{ weather.current.condition }}</p>
+        <img src="{{ weather.current.icon }}" alt="{{ weather.current.condition }}">
+        
+        <div class="forecast">
+            {% for day in weather.forecast %}
+                <div class="day">
+                    <h3>{{ day.date }}</h3>
+                    <p>Max: {{ day.max_temp_c }}°C</p>
+                    <p>Min: {{ day.min_temp_c }}°C</p>
+                    <p>Condition: {{ day.condition }}</p>
+                    <img src="{{ day.icon }}" alt="{{ day.condition }}">
+                </div>
+            {% endfor %}
+        </div>
+    {% endif %}
+</body>
+</html>
